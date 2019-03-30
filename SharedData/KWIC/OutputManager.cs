@@ -32,6 +32,7 @@ namespace SharedData.KWIC
             foreach (var index in indices)
             {
                 stringBuilder.Append(GenerateStringLine(index));
+                stringBuilder.AppendLine();
             }
 
             return stringBuilder.ToString();
