@@ -10,10 +10,10 @@ namespace SharedData.KWIC
     {
         private readonly CircularShifter _circularShifter;
         private readonly Alphabetizer _alphabetizer;
-        private OutputManager _outputManager;
-        private InputManager _inputManager;
+        private readonly OutputManager _outputManager;
+        private readonly InputManager _inputManager;
 
-        private string _input;
+        private char[] _input;
         private List<CharIndex> _circularShiftIndices;
         private List<CharIndex> _alphabetizedIndices;
 
@@ -25,72 +25,39 @@ namespace SharedData.KWIC
             _outputManager = new OutputManager();
         }
 
-        public void GenerateResult()
-        {
-            
-        }
-
-        public List<string> GetOutput()
-        {
-            return null;
-        }
-
-        public string GenerateSomething()
-        {
-            var stringBuilder = new StringBuilder();
-
-            foreach (var index in _circularShiftIndices)
-            {
-                stringBuilder.Append(GenerateStringLine(index, _input));
-            }
-
-            return stringBuilder.ToString();
-        }
-
-        public List<string> GenerateSomethingList()
-        {
-            var result = new List<string>();
-
-            foreach (var index in _circularShiftIndices)
-            {
-                result.Add(GenerateStringLine(index, _input));
-            }
-
-            return result;
-        }
-
-        public static string GenerateStringLine(CharIndex index, string input)
-        {
-            var stringBuilder = new StringBuilder();
-
-            var first = index.GetFirst();
-            var offset = index.GetOffset();
-            var i = first + offset;
-            var k = first;
-
-            while (i != input.Length && input[i] != '\r' && input[i] != '\n')
-            {
-                stringBuilder.Append(input[i]);
-                i++;
-            }
-
-            if (offset != 0)
-            {
-                stringBuilder.Append(' ');
-            }
-
-            while (k < first + offset -1)
-            {
-                stringBuilder.Append(input[k]);
-                k++;
-            }
-            return stringBuilder.ToString();
-        }
-
         public void SetInput(string input)
         {
-            _input = input;
-            _circularShiftIndices = _circularShifter.GetShiftedWordIndices(input);
+            _input = _inputManager.GetFormattedWords(input);
+            _outputManager.SetInput(_input);
+
+            GenerateResults();
         }
+
+        private void GenerateResults()
+        {
+            _circularShiftIndices = _circularShifter.GetShiftedWordIndices(_input);
+            _alphabetizedIndices = _alphabetizer.GetAlphabetizedIndices(_input, _circularShiftIndices);
+        }
+
+        public string GetAlphabetized()
+        {
+            return _outputManager.GetStringFromIndices(_alphabetizedIndices);
+        }
+
+        public List<string> GetAlphabetizedAsList()
+        {
+            return _outputManager.GetStringListFromIndices(_alphabetizedIndices);
+        }
+
+        public string GetCircularlyShifted()
+        {
+            return _outputManager.GetStringFromIndices(_circularShiftIndices);
+        }
+
+        public List<string> GetCircularlyShiftedAsList()
+        {
+            return _outputManager.GetStringListFromIndices(_circularShiftIndices);
+        }
+
     }
 }

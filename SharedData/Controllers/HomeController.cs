@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using SharedData.DataManagers;
 using SharedData.KWIC;
 using SharedData.Models;
 
@@ -13,24 +14,15 @@ namespace SharedData.Controllers
     {
         public IActionResult Index()
         {
-            var sharedDataKWIC = new KWICController();
-
-            var testString = "Pipe and Filter\nSoftware Architecture in Practice";
-
-            sharedDataKWIC.SetInput(testString);
-
-            var result3 = sharedDataKWIC.GenerateSomething();
-            var result4 = sharedDataKWIC.GenerateSomethingList();
-
             return View();
         }
 
         [HttpPost]
         public IActionResult GetKWICResult(string input)
         {
-            var sharedDataKWIC = new KWICController();
+            var stringManager = new StringResultViewDataManager(input);
 
-            return View("Index");
+            return View("Index", stringManager.GetStringResultViewModel());
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

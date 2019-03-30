@@ -7,7 +7,7 @@ namespace SharedData.KWIC
 {
     public class CircularShifter
     {
-        public List<CharIndex> GetShiftedWordIndices(string input)
+        public List<CharIndex> GetShiftedWordIndices(char[] input)
         {
             var offsets = new List<CharIndex>();
             var currentOffset = 0;
