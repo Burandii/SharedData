@@ -19,26 +19,29 @@
         <br />
         <br />
         <div>
+            <h1>User Input:</h1>
             @if (Model.UserInput != null)
             {
                 <span style="white-space: pre-line">@Model.UserInput</span>
-                <br />
+                <br/>
             }
         </div>
         <br />
         <div>
+            <h1>Circular Shift:</h1>
             @if (Model.CircularlyShifted != null)
             {
                 foreach (var s in Model.CircularlyShifted)
                 {
                     @Html.Raw(s)
-                    <br />
+                    <br/>
                 }
             }
 
         </div>
         <br />
         <div>
+            <h1>Alphabetized:</h1>
             @if (Model.Alphabetized != null)
             {
                 foreach (var s in Model.Alphabetized)
