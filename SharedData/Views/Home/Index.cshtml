@@ -14,10 +14,14 @@
     @if (Model != null)
     {
         <br />
+        @Model.ElapsedTimeMs
+        @Html.Raw(" milliseconds have passed to run this");
+        <br />
+        <br />
         <div>
             @if (Model.UserInput != null)
             {
-            <span style="white-space: pre-line">@Model.UserInput</span>
+                <span style="white-space: pre-line">@Model.UserInput</span>
                 <br />
             }
         </div>

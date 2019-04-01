@@ -7,6 +7,7 @@ namespace SharedData.Models
 {
     public class StringResultViewModel
     {
+        public long ElapsedTimeMs { get; set; }
         public string UserInput { get; set; }
         public List<string> Alphabetized { get; set; }
         public List<string> CircularlyShifted { get; set; }

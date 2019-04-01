@@ -19,10 +19,15 @@ namespace SharedData.DataManagers
 
         public StringResultViewModel GetStringResultViewModel()
         {
+            var watch = System.Diagnostics.Stopwatch.StartNew();
             _sharedData.SetInput(_input);
+            watch.Stop();
+
+            var elapsedMs = watch.ElapsedMilliseconds;
 
             var viewModel = new StringResultViewModel
             {
+                ElapsedTimeMs = elapsedMs,
                 Alphabetized = _sharedData.GetAlphabetizedAsList(),
                 CircularlyShifted = _sharedData.GetCircularlyShiftedAsList(),
                 UserInput = _input

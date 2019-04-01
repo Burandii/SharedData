@@ -13,7 +13,7 @@ namespace SharedData.KWIC
         {
             "a", "an","the", "and", "or", "of", "to",
             "be", "is", "in", "out", "by", "as",
-            "at", "off",
+            "at", "off"
         };
 
         public List<CharIndex> GetShiftedWordIndices(char[] input)
@@ -79,7 +79,11 @@ namespace SharedData.KWIC
         private bool StartsWithNoiseWord(CharIndex index, char[] input)
         {
             var startingIndex = index.GetOffset() + index.GetFirst();
-            var firstChar = char.ToLower(input[startingIndex]);
+            var firstChar = input[startingIndex];
+
+            if (firstChar == '\t' || firstChar == ' ' || firstChar == '\n')
+                return true;
+            firstChar = char.ToLowerInvariant(firstChar);
 
             // noise words only start with these characters
             if (firstChar == 'a' || firstChar == 'i' || firstChar == 'o' || firstChar == 't' || firstChar == 'b')
