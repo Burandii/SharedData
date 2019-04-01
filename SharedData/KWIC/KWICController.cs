@@ -25,6 +25,14 @@ namespace SharedData.KWIC
             _outputManager = new OutputManager();
         }
 
+        private string[] _noiseWords =
+        {
+            "a", "an", "the", "or", "of", "to",
+            "be", "is", "in", "out", "by", "as",
+            "at", "off"
+        };
+
+
         public void SetInput(string input)
         {
             _input = _inputManager.GetFormattedWords(input);
